@@ -26,6 +26,8 @@
 #include <stdint.h>
 #include <string.h>
 
+FILE * logfp;
+
 #include "rtlsdr_i2c.h"
 #include "tuner_r82xx.h"
 
@@ -449,6 +451,10 @@ static int r82xx_set_pll(struct r82xx_priv *priv, uint32_t freq)
 
 	/* set VCO current = 100 */
 	rc = r82xx_write_reg_mask(priv, 0x12, 0x00, 0xe0);
+	logfp = fopen ("/tmp/vcolog.txt", "a");
+	fprintf(logfile,"executed VCO current mod - 1: %d", rc);
+	fclose(logfp);
+	
 	if (rc < 0)
 		return rc;
 
@@ -541,6 +547,10 @@ static int r82xx_set_pll(struct r82xx_priv *priv, uint32_t freq)
 		if (!i) {
 			/* Didn't lock. Increase VCO current */
 			rc = r82xx_write_reg_mask(priv, 0x12, 0x00, 0xe0);
+			logfp = fopen ("/tmp/vcolog.txt", "a");
+			fprintf(logfile,"executed VCO current mod - 2: %d", rc);
+			fclose(logfp);
+
 			if (rc < 0)
 				return rc;
 		}
