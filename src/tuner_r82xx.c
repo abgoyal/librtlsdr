@@ -452,7 +452,7 @@ static int r82xx_set_pll(struct r82xx_priv *priv, uint32_t freq)
 	/* set VCO current = 100 */
 	rc = r82xx_write_reg_mask(priv, 0x12, 0x00, 0xe0);
 	logfp = fopen ("/tmp/vcolog.txt", "a");
-	fprintf(logfile,"executed VCO current mod - 1: %d", rc);
+	fprintf(logfp,"executed VCO current mod - 1: %d", rc);
 	fclose(logfp);
 	
 	if (rc < 0)
@@ -548,7 +548,7 @@ static int r82xx_set_pll(struct r82xx_priv *priv, uint32_t freq)
 			/* Didn't lock. Increase VCO current */
 			rc = r82xx_write_reg_mask(priv, 0x12, 0x00, 0xe0);
 			logfp = fopen ("/tmp/vcolog.txt", "a");
-			fprintf(logfile,"executed VCO current mod - 2: %d", rc);
+			fprintf(logfp,"executed VCO current mod - 2: %d", rc);
 			fclose(logfp);
 
 			if (rc < 0)
